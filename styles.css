@@ -1,0 +1,222 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #ff9ad5, #24a36a);
+  color: #ffffff;
+}
+
+.screen {
+  width: 360px;
+  max-width: 95vw;
+  padding: 20px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #2ecc71, #1f8a4d);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.title {
+  margin-bottom: 16px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* Character cards */
+
+.characters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.char-card {
+  flex: 1;
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.char-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.char-card.selected {
+  border-color: #ff66b2;
+  box-shadow: 0 0 0 3px rgba(255, 102, 178, 0.6);
+}
+
+.char-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 6px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+}
+
+/* Simple coloured avatars */
+.avatar-explorer {
+  background: linear-gradient(135deg, #f1c40f, #e67e22);
+}
+.avatar-ninja {
+  background: linear-gradient(135deg, #2c3e50, #8e44ad);
+}
+.avatar-fairy {
+  background: linear-gradient(135deg, #ff66b2, #9b59b6);
+}
+
+/* Buttons */
+
+button {
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: #ff66b2;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.1s ease, box-shadow 0.1s ease,
+    background 0.1s ease;
+}
+
+button:hover:enabled {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  background: #ff409f;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Progress bar */
+
+.progress-wrapper {
+  margin-bottom: 12px;
+}
+
+#step-label {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+#progress-fill {
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #ff66b2, #ffddf1);
+  transition: width 0.25s ease-out;
+}
+
+/* Step text and choices */
+
+#step-text {
+  min-height: 60px;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 0.95rem;
+}
+
+.choices {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.choices button {
+  flex: 1;
+  font-size: 0.85rem;
+}
+
+/* Gift Box */
+
+.gift-box {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 10px auto 16px;
+  animation: float 2s ease-in-out infinite;
+}
+
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70%;
+  background: #ff66b2;
+  border-radius: 12px;
+}
+
+.gift-lid {
+  position: absolute;
+  top: 0;
+  left: -5%;
+  width: 110%;
+  height: 30%;
+  background: #ff99cc;
+  border-radius: 12px;
+}
+
+.gift-ribbon {
+  position: absolute;
+  left: 50%;
+  top: -10%;
+  width: 20%;
+  height: 120%;
+  background: #ffffff;
+  transform: translateX(-50%);
+  border-radius: 999px;
+}
+
+.gift-text {
+  margin-bottom: 6px;
+}
+
+.code {
+  background: #ffffff;
+  color: #e91e63;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
