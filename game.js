@@ -126,7 +126,7 @@ function initLevel() {
   const groundY = canvas.height - 50;
 
   // Make each level very long so you have obstacles for full 60s
-  const levelLength = 8000 + gameState.level * 400; // was 2200
+  const levelLength = 16000 + gameState.level * 800; // was 2200
 
   // Ground platform covering full length
   platforms.push({
@@ -138,8 +138,8 @@ function initLevel() {
   });
 
   // Number of objects scaled with level & length
-  const levelStars = 20 + gameState.level * 3;
-  const levelPotholes = 12 + gameState.level * 2;
+  const levelStars = 60 + gameState.level * 3;
+  const levelPotholes = 25 + gameState.level * 2;
   const floatCount = 8 + Math.floor(gameState.level / 2);
 
   // Stars spread along whole length
@@ -156,7 +156,7 @@ function initLevel() {
 
   // Potholes on ground along whole length
   for (let i = 0; i < levelPotholes; i++) {
-    const baseX = 500 + Math.random() * (levelLength - 900);
+    const baseX = 1000 + Math.random() * (levelLength - 900);
     potholes.push({
       x: baseX,
       y: groundY,
@@ -167,7 +167,7 @@ function initLevel() {
 
   // Floating steps throughout the level
   for (let i = 0; i < floatCount; i++) {
-    const baseX = 600 + Math.random() * (levelLength - 1000);
+    const baseX = 1200 + Math.random() * (levelLength - 1000);
     platforms.push({
       x: baseX,
       y: 260 + Math.sin(i) * 40,
