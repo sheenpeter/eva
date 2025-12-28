@@ -77,3 +77,60 @@ body {
 .hidden {
   display: none !important;
 }
+
+#startScreen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.5);
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 5;
+}
+
+#charactersRow {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.charOption {
+  width: 90px;
+  padding: 8px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  color: white;
+  font-size: 12px;
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.charOption.selected {
+  border-color: #ff66b2;
+  box-shadow: 0 0 0 3px rgba(255,102,178,0.5);
+}
+
+.charPreview {
+  width: 40px;
+  height: 60px;
+  margin: 0 auto 4px;
+  border-radius: 8px;
+  position: relative;
+}
+
+/* simple “outfits” as colours */
+.charPink { background: #ff66b2; }
+.charBlue { background: #3498db; }
+.charGreen { background: #2ecc71; }
+.charPurple { background: #9b59b6; }
+.charOrange { background: #e67e22; }
+
+.timer {
+  margin-top: 5px;
+}
+
