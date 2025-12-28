@@ -1,3 +1,4 @@
+/* Global reset */
 * {
   margin: 0;
   padding: 0;
@@ -5,22 +6,24 @@
 }
 
 body {
-  background: linear-gradient(135deg, #27ae60 0%, #2ecc71 50%, #ff9ad5 100%);
+  background: radial-gradient(circle at top, #ff9ad5, #24a36a);
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   overflow: hidden;
 }
 
+/* Canvas */
 #gameCanvas {
   border: 4px solid #ff66b2;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
   background: #1e7e34;
 }
 
+/* HUD / UI overlay */
 #ui {
   position: absolute;
   top: 20px;
@@ -28,16 +31,17 @@ body {
   color: white;
   font-weight: bold;
   font-size: 18px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 #ui > div {
   margin-bottom: 5px;
-  background: rgba(255,102,178,0.3);
+  background: rgba(255, 102, 178, 0.3);
   padding: 8px 15px;
   border-radius: 20px;
 }
 
+/* Game over dialog */
 #gameOver {
   position: absolute;
   top: 50%;
@@ -47,14 +51,15 @@ body {
   padding: 40px;
   border-radius: 20px;
   text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   color: white;
+  z-index: 10;
 }
 
 #gameOver h1 {
   font-size: 36px;
   margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 #gameOver button {
@@ -67,27 +72,26 @@ body {
   border-radius: 25px;
   cursor: pointer;
   margin-top: 20px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 #gameOver button:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-.hidden {
-  display: none !important;
-}
-
+/* Start / character selection screen */
 #startScreen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.55);
   padding: 30px;
   border-radius: 20px;
   text-align: center;
   z-index: 5;
+  max-width: 520px;
 }
 
 #charactersRow {
@@ -102,17 +106,23 @@ body {
   width: 90px;
   padding: 8px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.15);
+  background: rgba(255, 255, 255, 0.15);
   cursor: pointer;
   color: white;
   font-size: 12px;
   text-align: center;
   border: 2px solid transparent;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.charOption:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
 }
 
 .charOption.selected {
   border-color: #ff66b2;
-  box-shadow: 0 0 0 3px rgba(255,102,178,0.5);
+  box-shadow: 0 0 0 3px rgba(255, 102, 178, 0.5);
 }
 
 .charPreview {
@@ -123,14 +133,40 @@ body {
   position: relative;
 }
 
-/* simple “outfits” as colours */
+/* Coloured outfits for preview blocks */
 .charPink { background: #ff66b2; }
 .charBlue { background: #3498db; }
 .charGreen { background: #2ecc71; }
 .charPurple { background: #9b59b6; }
 .charOrange { background: #e67e22; }
 
-.timer {
-  margin-top: 5px;
+/* Start button */
+#startBtn {
+  margin-top: 10px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: none;
+  background: #ff66b2;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
 }
 
+#startBtn:hover:enabled {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  background: #ff409f;
+}
+
+#startBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
