@@ -1,67 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mini Adventure Game</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>Green Pink Platformer Adventure</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Character Select Screen -->
-  <div id="screen-select" class="screen">
-    <h1 class="title">Choose Your Hero</h1>
-    <div class="characters">
-      <div class="char-card" data-char="explorer">
-        <div class="char-avatar avatar-explorer"></div>
-        <h2>Explorer</h2>
-      </div>
-      <div class="char-card" data-char="ninja">
-        <div class="char-avatar avatar-ninja"></div>
-        <h2>Ninja</h2>
-      </div>
-      <div class="char-card" data-char="fairy">
-        <div class="char-avatar avatar-fairy"></div>
-        <h2>Fairy</h2>
-      </div>
-    </div>
-    <button id="btn-start" disabled>Start Adventure</button>
+  <canvas id="gameCanvas"></canvas>
+  <div id="ui">
+    <div class="score">Stars: <span id="starCount">0</span></div>
+    <div class="level">Level: <span id="levelNum">1</span></div>
+    <div class="lives">Lives: <span id="lives">3</span></div>
   </div>
-
-  <!-- Game Screen -->
-  <div id="screen-game" class="screen hidden">
-    <h1 class="title">Green & Pink Adventure</h1>
-    <div class="progress-wrapper">
-      <span id="step-label">Step 1 / 50</span>
-      <div class="progress-bar">
-        <div id="progress-fill"></div>
-      </div>
-    </div>
-    <p id="step-text"></p>
-
-    <div class="choices">
-      <button id="choice-left">Left Path</button>
-      <button id="choice-right">Right Path</button>
-    </div>
-
-    <button id="btn-next">Next Step</button>
+  <div id="gameOver" class="hidden">
+    <h1>Game Over!</h1>
+    <p>Final Score: <span id="finalScore">0</span></p>
+    <button id="restartBtn">Restart Adventure</button>
   </div>
-
-  <!-- Gift Screen -->
-  <div id="screen-gift" class="screen hidden">
-    <h1 class="title">You Did It!</h1>
-    <div class="gift-box">
-      <div class="gift-lid"></div>
-      <div class="gift-body"></div>
-      <div class="gift-ribbon"></div>
-    </div>
-    <p class="gift-text">
-      Congratulations, hero! You completed all 50 steps and unlocked your gift.
-    </p>
-    <p class="gift-text">
-      Your special code: <span class="code">ADVENTURE-50</span>
-    </p>
-    <button id="btn-restart">Play Again</button>
-  </div>
-
   <script src="game.js"></script>
 </body>
 </html>
