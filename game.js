@@ -156,11 +156,11 @@ function initLevel() {
 
   // Potholes on ground along whole length
   for (let i = 0; i < levelPotholes; i++) {
-    const baseX = 1000 + Math.random() * (levelLength - 900);
+    const baseX = 800 + Math.random() * (levelLength - 900);
     potholes.push({
       x: baseX,
       y: groundY,
-      width: 80 + gameState.level * 2,
+      width: 40 + gameState.level * 2,
       height: 50
     });
   }
