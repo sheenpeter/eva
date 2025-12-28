@@ -32,7 +32,7 @@ let gameState = {
   scrollOffset: 0,
   timeLeft: levelDuration,
   characterStyle: 'pink',
-  falling: false // true while falling into pothole
+  falling: false
 };
 
 let timerInterval = null;
@@ -102,8 +102,6 @@ function startTimer() {
     gameState.timeLeft--;
     if (gameState.timeLeft < 0) gameState.timeLeft = 0;
     timeLeftEl.textContent = gameState.timeLeft;
-
-    // Time up -> go to next level
     if (gameState.timeLeft <= 0) {
       nextLevel();
     }
@@ -136,7 +134,7 @@ function initLevel() {
     color: '#27ae60'
   });
 
-  const levelStars = 4 + gameState.level; // scale with level
+  const levelStars = 4 + gameState.level;
   const levelPotholes = 2 + Math.floor(gameState.level / 2);
 
   // Stars
@@ -151,7 +149,7 @@ function initLevel() {
     });
   }
 
-  // Potholes along ground only
+  // Potholes
   for (let i = 0; i < levelPotholes; i++) {
     const baseX = 400 + i * 260;
     potholes.push({
@@ -181,7 +179,7 @@ function updateUI() {
   livesEl.textContent = gameState.lives;
 }
 
-// Basic rect collision
+// rect collision
 function collides(a, b) {
   return (
     a.x < b.x + b.width &&
@@ -201,7 +199,7 @@ function nextLevel() {
   resetPlayer();
   initLevel();
   updateUI();
-  startTimer(); // reset 60 s
+  startTimer();
 }
 
 function loseLifeAndRestartLevel() {
@@ -228,14 +226,13 @@ function endGame() {
 restartBtn.addEventListener('click', () => {
   gameOverScreen.classList.add('hidden');
   startScreen.style.display = 'block';
-  startBtn.disabled = true;           // force pick again
+  startBtn.disabled = true;
   charOptions.forEach(o => o.classList.remove('selected'));
 });
 
 // ---- Physics / update ----
 function updatePlayer() {
   if (gameState.falling) {
-    // falling animation into pothole
     player.velY += 1.2;
     player.y += player.velY;
     if (player.y > canvas.height + 50) {
@@ -245,18 +242,15 @@ function updatePlayer() {
     return;
   }
 
-  // gravity
   if (!player.grounded) {
     player.velY += 0.8;
   }
 
-  // jump
   if (keys['Space'] && player.grounded) {
     player.velY = -16;
     player.grounded = false;
   }
 
-  // auto-run
   player.velX = gameState.gameSpeed;
 
   player.x += player.velX;
@@ -269,7 +263,6 @@ function updatePlayer() {
   for (const p of platforms) {
     const worldX = p.x - gameState.scrollOffset;
     const platRect = { x: worldX, y: p.y, width: p.width, height: p.height };
-
     if (collides(player, platRect) && player.velY >= 0 && player.y < p.y) {
       player.y = p.y - player.height;
       player.velY = 0;
@@ -277,17 +270,14 @@ function updatePlayer() {
     }
   }
 
-  // ground clamp (only where NOT pothole)
+  // potholes vs ground
   let inPothole = false;
   for (const raw of potholes) {
     const worldX = raw.x - gameState.scrollOffset;
     const holeRect = { x: worldX, y: raw.y, width: raw.width, height: raw.height };
-
-    // If player's feet are inside hole X-range and near ground -> start fall
     const feetX = player.x + player.width / 2;
     const holeStart = holeRect.x;
     const holeEnd = holeRect.x + holeRect.width;
-
     if (feetX > holeStart && feetX < holeEnd && player.y + player.height >= groundY - 2) {
       inPothole = true;
       break;
@@ -295,12 +285,10 @@ function updatePlayer() {
   }
 
   if (inPothole) {
-    // drop down
     player.grounded = false;
     gameState.falling = true;
-    player.velY = 5; // initial fall
+    player.velY = 5;
   } else {
-    // normal ground
     if (player.y + player.height > groundY) {
       player.y = groundY - player.height;
       player.velY = 0;
@@ -308,7 +296,7 @@ function updatePlayer() {
     }
   }
 
-  // stars collect
+  // stars
   for (const s of stars) {
     if (s.collected) continue;
     const worldX = s.x - gameState.scrollOffset;
@@ -320,13 +308,11 @@ function updatePlayer() {
     }
   }
 
-  // level complete when all stars taken before timer ends
   if (stars.length > 0 && stars.every(s => s.collected)) {
     nextLevel();
     return;
   }
 
-  // scrolling world
   if (player.x > canvas.width / 2) {
     gameState.scrollOffset += gameState.gameSpeed;
     player.x = canvas.width / 2;
@@ -338,11 +324,9 @@ function updatePlayer() {
 
 // ---- Drawing ----
 function drawBackground() {
-  // main green
   ctx.fillStyle = '#1e7e34';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // gradient strip
   const grd = ctx.createLinearGradient(0, canvas.height - 90, 0, canvas.height);
   grd.addColorStop(0, '#2ecc71');
   grd.addColorStop(1, '#145a32');
@@ -384,7 +368,7 @@ function drawStars() {
   }
 }
 
-// draw girl with outfit
+// stylised girl
 function drawPlayer() {
   const x = player.x;
   const y = player.y;
@@ -401,7 +385,7 @@ function drawPlayer() {
   ctx.fillRect(x + w * 0.18, y + h - 4, w * 0.24, 4);
   ctx.fillRect(x + w * 0.58, y + h - 4, w * 0.24, 4);
 
-  // outfit
+  // outfit colour
   let outfitColor = '#ff66b2';
   if (gameState.characterStyle === 'blue') outfitColor = '#3498db';
   if (gameState.characterStyle === 'green') outfitColor = '#2ecc71';
@@ -409,7 +393,7 @@ function drawPlayer() {
   if (gameState.characterStyle === 'orange') outfitColor = '#e67e22';
 
   ctx.fillStyle = outfitColor;
-  ctx.fillRect(x + w * 0.15, y + h * 0.3, w * 0.7, h * 0.4); // torso
+  ctx.fillRect(x + w * 0.15, y + h * 0.3, w * 0.7, h * 0.4);
 
   // head
   ctx.fillStyle = '#f1c27d';
@@ -424,7 +408,7 @@ function drawPlayer() {
   ctx.fill();
   ctx.fillRect(x + w * 0.2, y + h * 0.18, w * 0.6, h * 0.18);
 
-  // simple face
+  // face
   ctx.fillStyle = '#ffffff';
   ctx.beginPath();
   ctx.arc(x + w * 0.43, y + h * 0.18, 2, 0, Math.PI * 2);
@@ -445,7 +429,7 @@ function draw() {
   drawPlayer();
 }
 
-// ---- Main loop ----
+// main loop
 function loop() {
   if (gameState.gameRunning) {
     updatePlayer();
@@ -454,5 +438,4 @@ function loop() {
   requestAnimationFrame(loop);
 }
 
-// Start render loop immediately
 loop();
