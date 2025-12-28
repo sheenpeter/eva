@@ -6,17 +6,59 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Start / character selection screen -->
+  <div id="startScreen">
+    <h1 style="color:white; text-shadow:2px 2px 4px rgba(0,0,0,0.7);">
+      Choose Your Hero
+    </h1>
+    <p style="color:white; margin-top:8px;">
+      Pick a girl in a trendy outfit and press Start.
+    </p>
+    <div id="charactersRow">
+      <!-- 5 simple styled characters -->
+      <div class="charOption" data-char="pink">
+        <div class="charPreview charPink"></div>
+        <span>Pink Hoodie</span>
+      </div>
+      <div class="charOption" data-char="blue">
+        <div class="charPreview charBlue"></div>
+        <span>Blue Jacket</span>
+      </div>
+      <div class="charOption" data-char="green">
+        <div class="charPreview charGreen"></div>
+        <span>Green Crop Top</span>
+      </div>
+      <div class="charOption" data-char="purple">
+        <div class="charPreview charPurple"></div>
+        <span>Purple Dress</span>
+      </div>
+      <div class="charOption" data-char="orange">
+        <div class="charPreview charOrange"></div>
+        <span>Orange Streetwear</span>
+      </div>
+    </div>
+    <button id="startBtn" disabled>Start Adventure</button>
+  </div>
+
+  <!-- Game canvas -->
   <canvas id="gameCanvas"></canvas>
+
+  <!-- UI overlay -->
   <div id="ui">
     <div class="score">Stars: <span id="starCount">0</span></div>
-    <div class="level">Level: <span id="levelNum">1</span></div>
+    <div class="level">Level: <span id="levelNum">1</span> / 50</div>
     <div class="lives">Lives: <span id="lives">3</span></div>
+    <div class="timer">Time: <span id="timeLeft">60</span>s</div>
   </div>
+
+  <!-- Game over screen -->
   <div id="gameOver" class="hidden">
-    <h1>Game Over!</h1>
+    <h1>Adventure Complete</h1>
     <p>Final Score: <span id="finalScore">0</span></p>
+    <p>Total Levels Reached: <span id="finalLevel">1</span></p>
     <button id="restartBtn">Restart Adventure</button>
   </div>
+
   <script src="game.js"></script>
 </body>
 </html>
