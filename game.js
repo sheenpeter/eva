@@ -125,53 +125,59 @@ function initLevel() {
 
   const groundY = canvas.height - 50;
 
-  // ground platform
+  // Make each level very long so you have obstacles for full 60s
+  const levelLength = 8000 + gameState.level * 400; // was 2200
+
+  // Ground platform covering full length
   platforms.push({
     x: 0,
     y: groundY,
-    width: 2200,
+    width: levelLength,
     height: 50,
     color: '#27ae60'
   });
 
-  const levelStars = 4 + gameState.level;
-  const levelPotholes = 2 + Math.floor(gameState.level / 2);
+  // Number of objects scaled with level & length
+  const levelStars = 20 + gameState.level * 3;
+  const levelPotholes = 12 + gameState.level * 2;
+  const floatCount = 8 + Math.floor(gameState.level / 2);
 
-  // Stars
+  // Stars spread along whole length
   for (let i = 0; i < levelStars; i++) {
-    const baseX = 350 + i * 220;
+    const baseX = 400 + Math.random() * (levelLength - 800);
     stars.push({
-      x: baseX + Math.random() * 120,
-      y: 180 + Math.random() * 80,
+      x: baseX,
+      y: 160 + Math.random() * 120,
       width: 20,
       height: 20,
       collected: false
     });
   }
 
-  // Potholes
+  // Potholes on ground along whole length
   for (let i = 0; i < levelPotholes; i++) {
-    const baseX = 400 + i * 260;
+    const baseX = 500 + Math.random() * (levelLength - 900);
     potholes.push({
-      x: baseX + Math.random() * 140,
+      x: baseX,
       y: groundY,
-      width: 70 + gameState.level * 2,
+      width: 80 + gameState.level * 2,
       height: 50
     });
   }
 
-  // Floating steps
-  const floatCount = 2 + Math.floor(gameState.level / 3);
+  // Floating steps throughout the level
   for (let i = 0; i < floatCount; i++) {
+    const baseX = 600 + Math.random() * (levelLength - 1000);
     platforms.push({
-      x: 500 + i * 260 + Math.random() * 140,
-      y: 260 + Math.sin(i) * 30,
+      x: baseX,
+      y: 260 + Math.sin(i) * 40,
       width: 130,
       height: 20,
       color: '#ff9ad5'
     });
   }
 }
+
 
 function updateUI() {
   starCountEl.textContent = gameState.stars;
