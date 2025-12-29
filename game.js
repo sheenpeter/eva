@@ -5,7 +5,7 @@ canvas.width = 800;
 canvas.height = 400;
 
 const maxLevel = 50;
-const levelDuration = 60; // seconds
+const levelDuration = 10; // seconds
 
 // ---- DOM refs ----
 const startScreen = document.getElementById('startScreen');
@@ -126,7 +126,7 @@ function initLevel() {
   const groundY = canvas.height - 50;
 
   // Make each level very long so you have obstacles for full 60s
-  const levelLength = 16000 + gameState.level * 800; // was 2200
+  const levelLength = 10000 + gameState.level * 800; // was 2200
 
   // Ground platform covering full length
   platforms.push({
@@ -160,7 +160,7 @@ function initLevel() {
     potholes.push({
       x: baseX,
       y: groundY,
-      width: 40 + gameState.level * 2,
+      width: 30 + gameState.level * 2,
       height: 50
     });
   }
