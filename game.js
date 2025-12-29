@@ -26,7 +26,7 @@ const restartBtn = document.getElementById('restartBtn');
 let gameState = {
   stars: 0,
   level: 1,
-  lives: 3,
+  lives: 50,
   gameRunning: false,
   gameSpeed: 2,
   scrollOffset: 0,
@@ -82,7 +82,7 @@ function startGameRun() {
   resetPlayer();
   gameState.stars = 0;
   gameState.level = 1;
-  gameState.lives = 3;
+  gameState.lives = 50;
   gameState.gameSpeed = 2;
   gameState.scrollOffset = 0;
   gameState.timeLeft = levelDuration;
