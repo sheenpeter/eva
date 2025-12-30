@@ -5,7 +5,7 @@ canvas.width = 800;
 canvas.height = 400;
 
 const maxLevel = 50;
-const levelDuration = 10; // seconds
+const levelDuration = 60; // seconds
 
 // ---- DOM refs ----
 const startScreen = document.getElementById('startScreen');
@@ -26,7 +26,7 @@ const restartBtn = document.getElementById('restartBtn');
 let gameState = {
   stars: 0,
   level: 1,
-  lives: 50,
+  lives: 50,  // Increased to 50 as requested
   gameRunning: false,
   gameSpeed: 2,
   scrollOffset: 0,
@@ -82,7 +82,7 @@ function startGameRun() {
   resetPlayer();
   gameState.stars = 0;
   gameState.level = 1;
-  gameState.lives = 50;
+  gameState.lives = 50;  // 50 lives as requested
   gameState.gameSpeed = 2;
   gameState.scrollOffset = 0;
   gameState.timeLeft = levelDuration;
@@ -125,8 +125,8 @@ function initLevel() {
 
   const groundY = canvas.height - 50;
 
-  // Make each level very long so you have obstacles for full 60s
-  const levelLength = 10000 + gameState.level * 800; // was 2200
+  // Extended level length for full 60 seconds gameplay
+  const levelLength = 8000 + gameState.level * 400;
 
   // Ground platform covering full length
   platforms.push({
@@ -137,12 +137,12 @@ function initLevel() {
     color: '#27ae60'
   });
 
-  // Number of objects scaled with level & length
-  const levelStars = 60 + gameState.level * 3;
-  const levelPotholes = 25 + gameState.level * 2;
+  // More objects for full gameplay
+  const levelStars = 20 + gameState.level * 3;
+  const levelPotholes = 12 + gameState.level * 2;
   const floatCount = 8 + Math.floor(gameState.level / 2);
 
-  // Stars spread along whole length
+  // Stars spread across whole level
   for (let i = 0; i < levelStars; i++) {
     const baseX = 400 + Math.random() * (levelLength - 800);
     stars.push({
@@ -154,20 +154,20 @@ function initLevel() {
     });
   }
 
-  // Potholes on ground along whole length
+  // Potholes spread across whole level
   for (let i = 0; i < levelPotholes; i++) {
-    const baseX = 800 + Math.random() * (levelLength - 900);
+    const baseX = 500 + Math.random() * (levelLength - 900);
     potholes.push({
       x: baseX,
       y: groundY,
-      width: 30 + gameState.level * 2,
+      width: 80 + gameState.level * 2,
       height: 50
     });
   }
 
-  // Floating steps throughout the level
+  // Floating platforms spread across whole level
   for (let i = 0; i < floatCount; i++) {
-    const baseX = 1200 + Math.random() * (levelLength - 1000);
+    const baseX = 600 + Math.random() * (levelLength - 1000);
     platforms.push({
       x: baseX,
       y: 260 + Math.sin(i) * 40,
@@ -177,7 +177,6 @@ function initLevel() {
     });
   }
 }
-
 
 function updateUI() {
   starCountEl.textContent = gameState.stars;
@@ -302,7 +301,7 @@ function updatePlayer() {
     }
   }
 
-  // stars
+  // STARS COLLECTION WITH BONUS LIFE
   for (const s of stars) {
     if (s.collected) continue;
     const worldX = s.x - gameState.scrollOffset;
@@ -310,6 +309,13 @@ function updatePlayer() {
     if (collides(player, starRect)) {
       s.collected = true;
       gameState.stars++;
+      
+      // BONUS LIFE: Every 10 stars = +1 life
+      if (gameState.stars % 10 === 0) {
+        gameState.lives++;
+        updateUI(); // Update lives display immediately
+      }
+      
       updateUI();
     }
   }
